@@ -14,15 +14,15 @@ export const onBoardUser = async() => {
                         clerkId: id
                   },
                   update: {
-                        firstname: firstName || null,
-                        lastname: lastName || null,
+                        firstName: firstName || null,
+                        lastName: lastName || null,
                         imageUrl: imageUrl || null,
                         email: emailAddresses[0]?.emailAddress || ""
                   },
                   create: {
                         clerkId: id,
-                        firstname: firstName || null,
-                        lastname: lastName || null,
+                        firstName: firstName || null,
+                        lastName: lastName || null,
                         imageUrl: imageUrl || null,
                         email: emailAddresses[0]?.emailAddress || ""
 
