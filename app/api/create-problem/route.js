@@ -1,11 +1,13 @@
-import { getJudge0LanguageId, pollBatchResults, submitBatch } from "@/lib/judge0";
-import { currentUserRole, getCurrentUser } from "@/modules/auth/actions";
+import {
+  getJudge0LanguageId,
+  pollBatchResults,
+  submitBatch,
+} from "@/lib/judge0";
+import { currentUserRole, getCurrentUser } from "@/modules/auth/actions/index";
 
 import { UserRole } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { resolveMetadata } from "next/dist/lib/metadata/resolve-metadata";
-
 
 export async function POST(request) {
   try {
@@ -17,7 +19,7 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-    
+
     const {
       title,
       description,
@@ -30,7 +32,14 @@ export async function POST(request) {
       referenceSolutions,
     } = body;
 
-    if (!title || !description || !difficulty || !testCases || !codeSnippets || !referenceSolutions) {
+    if (
+      !title ||
+      !description ||
+      !difficulty ||
+      !testCases ||
+      !codeSnippets ||
+      !referenceSolutions
+    ) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -44,9 +53,12 @@ export async function POST(request) {
       );
     }
 
-    if (!referenceSolutions || typeof referenceSolutions !== 'object') {
+    if (!referenceSolutions || typeof referenceSolutions !== "object") {
       return NextResponse.json(
-        { error: "Reference solutions must be provided for all supported languages" },
+        {
+          error:
+            "Reference solutions must be provided for all supported languages",
+        },
         { status: 400 }
       );
     }
@@ -83,7 +95,7 @@ export async function POST(request) {
           language: language,
           error: result.stderr || result.compile_output,
         });
-        
+
         if (result.status.id !== 3) {
           return NextResponse.json(
             {
@@ -101,31 +113,34 @@ export async function POST(request) {
         }
       }
     }
-      const newProblem = await db.problem.create({
-        data: {
-          title,
-          description,
-          difficulty,
-          tags,
-          examples,
-          constraints,
-          testCases,
-          codeSnippets,
-          referenceSolutions,
-          userId: user.id,
-        },
-      });
+    const newProblem = await db.problem.create({
+      data: {
+        title,
+        description,
+        difficulty,
+        tags,
+        examples,
+        constraints,
+        testCases,
+        codeSnippets,
+        referenceSolutions,
+        userId: user.id,
+      },
+    });
 
-      return NextResponse.json({
+    return NextResponse.json(
+      {
         success: true,
         message: "Problem created successfully",
         data: newProblem,
-      }, { status: 201 });
-    } catch (dbError) {
-      console.error("Database error:", dbError);
-      return NextResponse.json(
-        { error: "Failed to save problem to database" },
-        { status: 500 }
-      );
-  } 
+      },
+      { status: 201 }
+    );
+  } catch (dbError) {
+    console.error("Database error:", dbError);
+    return NextResponse.json(
+      { error: "Failed to save problem to database" },
+      { status: 500 }
+    );
+  }
 }

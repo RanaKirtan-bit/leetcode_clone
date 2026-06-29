@@ -40,7 +40,7 @@ enum Difficulty {
 model Problem {
   id          String     @id @default(uuid())
   title       String
-  description String
+  description String @db.Text
   difficulty  Difficulty
   tags        Json
   userId      String
