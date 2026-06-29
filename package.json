@@ -6,12 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed": "node prisma/seed.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@clerk/nextjs": "^7.5.8",
     "@hookform/resolvers": "^5.4.0",
+    "@monaco-editor/react": "^4.7.0",
     "@prisma/client": "^6.19.3",
     "axios": "^1.18.1",
     "class-variance-authority": "^0.7.1",

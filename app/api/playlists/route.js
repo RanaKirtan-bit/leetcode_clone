@@ -14,7 +14,7 @@ export async function GET(request) {
     }
 
     const dbUser = await db.user.findUnique({
-      where: { clerkId: user.id }
+      where: { clerkId: user.id },
     });
 
     if (!dbUser) {
@@ -67,7 +67,7 @@ export async function POST(request) {
     }
 
     const dbUser = await db.user.findUnique({
-      where: { clerkId: user.id }
+      where: { clerkId: user.id },
     });
 
     if (!dbUser) {
