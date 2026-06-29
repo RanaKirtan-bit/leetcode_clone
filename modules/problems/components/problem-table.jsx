@@ -50,7 +50,6 @@ const ProblemsTable = ({ problems, user }) => {
     useState(false);
   const [selectedProblemId, setSelectedProblemId] = useState(null);
 
-  // Extract all unique tags from problems
   const allTags = useMemo(() => {
     if (!Array.isArray(problems)) return [];
     const tagsSet = new Set();
@@ -58,10 +57,8 @@ const ProblemsTable = ({ problems, user }) => {
     return Array.from(tagsSet);
   }, [problems]);
 
-  // Define allowed difficulties
   const difficulties = ["EASY", "MEDIUM", "HARD"];
 
-  // Filter problems based on search, difficulty, and tags
   const filteredProblems = useMemo(() => {
     return (problems || [])
       .filter((problem) =>
@@ -75,7 +72,6 @@ const ProblemsTable = ({ problems, user }) => {
       );
   }, [problems, search, difficulty, selectedTag]);
 
-  // Pagination logic
   const itemsPerPage = 5;
   const totalPages = Math.ceil(filteredProblems.length / itemsPerPage);
   const paginatedProblems = useMemo(() => {
@@ -169,7 +165,6 @@ const ProblemsTable = ({ problems, user }) => {
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 p-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Problems</h1>
@@ -183,7 +178,6 @@ const ProblemsTable = ({ problems, user }) => {
         </Button>
       </div>
 
-      {/* Filters */}
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -238,7 +232,6 @@ const ProblemsTable = ({ problems, user }) => {
         </CardContent>
       </Card>
 
-      {/* Table */}
       <Card>
         <CardContent className="p-0">
           <Table>
@@ -345,7 +338,6 @@ const ProblemsTable = ({ problems, user }) => {
         </CardContent>
       </Card>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
@@ -379,7 +371,6 @@ const ProblemsTable = ({ problems, user }) => {
         </div>
       )}
 
-      {/* Modals */}
       <CreatePlaylistModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}

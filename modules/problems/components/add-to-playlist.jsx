@@ -95,7 +95,6 @@ const AddToPlaylistModal = ({ isOpen, onClose, onSubmit, problemId }) => {
                 variant="outline"
                 onClick={() => {
                   onClose();
-                  // You can emit an event or use a callback here to open create playlist modal
                 }}
               >
                 Create Playlist

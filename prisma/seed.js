@@ -25,7 +25,8 @@ const problems = [
         explanation: "Because nums[0] + nums[1] == 9, we return [0, 1].",
       },
     },
-    constraints: "2 <= nums.length <= 10^4\n-10^9 <= nums[i] <= 10^9\n-10^9 <= target <= 10^9\nOnly one valid answer exists.",
+    constraints:
+      "2 <= nums.length <= 10^4\n-10^9 <= nums[i] <= 10^9\n-10^9 <= target <= 10^9\nOnly one valid answer exists.",
     testCases: [
       { input: "2 7 11 15\n9", output: "0 1" },
       { input: "3 2 4\n6", output: "1 2" },
@@ -145,7 +146,8 @@ public class Main {
         explanation: '"amanaplanacanalpanama" is a palindrome.',
       },
     },
-    constraints: "1 <= s.length <= 2 * 10^5\ns consists only of printable ASCII characters.",
+    constraints:
+      "1 <= s.length <= 2 * 10^5\ns consists only of printable ASCII characters.",
     testCases: [
       { input: "A man, a plan, a canal: Panama", output: "true" },
       { input: "race a car", output: "false" },
@@ -229,17 +231,20 @@ public class Main {
       JAVASCRIPT: {
         input: "prices = [7,1,5,3,6,4]",
         output: "5",
-        explanation: "Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5.",
+        explanation:
+          "Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5.",
       },
       PYTHON: {
         input: "prices = [7,1,5,3,6,4]",
         output: "5",
-        explanation: "Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5.",
+        explanation:
+          "Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5.",
       },
       JAVA: {
         input: "prices = [7,1,5,3,6,4]",
         output: "5",
-        explanation: "Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5.",
+        explanation:
+          "Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5.",
       },
     },
     constraints: "1 <= prices.length <= 10^5\n0 <= prices[i] <= 10^4",
@@ -329,18 +334,21 @@ public class Main {
 ];
 
 async function main() {
-  // Find the first admin user to assign problems to
   const adminUser = await db.user.findFirst({ where: { role: "ADMIN" } });
 
   if (!adminUser) {
-    console.error("No ADMIN user found. Please sign in first to create your account, then run the seed.");
+    console.error(
+      "No ADMIN user found. Please sign in first to create your account, then run the seed."
+    );
     process.exit(1);
   }
 
   console.log(`Seeding problems for admin: ${adminUser.email}`);
 
   for (const problem of problems) {
-    const existing = await db.problem.findFirst({ where: { title: problem.title } });
+    const existing = await db.problem.findFirst({
+      where: { title: problem.title },
+    });
     if (existing) {
       console.log(`Skipping "${problem.title}" — already exists`);
       continue;
@@ -353,5 +361,8 @@ async function main() {
 }
 
 main()
-  .catch((e) => { console.error(e); process.exit(1); })
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
   .finally(() => db.$disconnect());

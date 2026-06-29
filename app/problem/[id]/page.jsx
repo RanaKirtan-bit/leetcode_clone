@@ -38,7 +38,11 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 import { getJudge0LanguageId } from "@/lib/judge0";
 import { toast } from "sonner";
 import Link from "next/link";
-import { executeCode, getAllSubmissionByCurrentUserForProblem, getProblemById } from "@/modules/problems/actions";
+import {
+  executeCode,
+  getAllSubmissionByCurrentUserForProblem,
+  getProblemById,
+} from "@/modules/problems/actions";
 import { SubmissionDetails } from "@/modules/problems/components/submission-details";
 import { TestCaseTable } from "@/modules/problems/components/test-case-table";
 import { SubmissionHistory } from "@/modules/problems/components/submission-history";
@@ -86,23 +90,24 @@ const ProblemIdPage = ({ params }) => {
     fetchProblem();
   }, [params]);
 
-    useEffect(()=>{
-    const fetchSubmissionHistory = async()=>{
+  useEffect(() => {
+    const fetchSubmissionHistory = async () => {
       try {
         const resolvedParams = await params;
-        const submissionHistory = await getAllSubmissionByCurrentUserForProblem(resolvedParams.id);
+        const submissionHistory = await getAllSubmissionByCurrentUserForProblem(
+          resolvedParams.id
+        );
         console.log(submissionHistory);
         if (submissionHistory.success) {
           setSubmissionHistory(submissionHistory.data);
         }
       } catch (error) {
-        console.error('Error fetching problem:', error);
+        console.error("Error fetching problem:", error);
       }
-    }
+    };
 
     fetchSubmissionHistory();
-  },[params])  
-
+  }, [params]);
 
   useEffect(() => {
     if (problem && problem.codeSnippets[selectedLanguage]) {
@@ -149,7 +154,6 @@ const ProblemIdPage = ({ params }) => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto p-6">
-        {/* header */}
         <div className="mb-6 flex items-start justify-between">
           <div>
             <div className="flex items-center gap-4 mb-4">
@@ -194,7 +198,6 @@ const ProblemIdPage = ({ params }) => {
                     {problem?.description}
                   </p>
 
-                  {/* Examples */}
                   <div>
                     <h3 className="font-semibold text-lg mb-3">Example:</h3>
                     {problem?.examples[selectedLanguage] && (
@@ -225,7 +228,6 @@ const ProblemIdPage = ({ params }) => {
                     )}
                   </div>
 
-                  {/* Constraints */}
                   <div>
                     <h3 className="font-semibold text-lg mb-3">Constraints:</h3>
                     <div className="bg-muted p-4 rounded-lg">
@@ -398,14 +400,14 @@ const ProblemIdPage = ({ params }) => {
               </CardContent>
             </Card>
 
- {/* Test Results and Submission Details */}
             {executionResponse && executionResponse.submission && (
               <div className="space-y-4 mt-4">
                 <SubmissionDetails submission={executionResponse.submission} />
-                <TestCaseTable testCases={executionResponse.submission.testCases} />
+                <TestCaseTable
+                  testCases={executionResponse.submission.testCases}
+                />
               </div>
             )}
-
           </div>
         </div>
       </div>
